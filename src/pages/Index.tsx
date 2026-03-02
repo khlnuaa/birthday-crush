@@ -2,10 +2,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FloatingHearts from "@/components/FloatingHearts";
 import Sparkle from "@/components/Sparkle";
+import BlowCandles from "@/components/BlowCandles";
 import { Heart, Cake, Star, PartyPopper, Mail, MailOpen } from "lucide-react";
 
 const Index = () => {
-  const [isOpened, setIsOpened] = useState(false);
+  const [step, setStep] = useState<"envelope" | "candles" | "message">("envelope");
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
@@ -14,11 +15,13 @@ const Index = () => {
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12">
         <AnimatePresence mode="wait">
-          {!isOpened ? (
-            <EnvelopeScreen onOpen={() => setIsOpened(true)} />
-          ) : (
-            <BirthdayMessage />
+          {step === "envelope" && (
+            <EnvelopeScreen onOpen={() => setStep("candles")} />
           )}
+          {step === "candles" && (
+            <BlowCandles onComplete={() => setStep("message")} />
+          )}
+          {step === "message" && <BirthdayMessage />}
         </AnimatePresence>
       </div>
     </div>
