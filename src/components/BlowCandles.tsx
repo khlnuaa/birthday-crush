@@ -242,7 +242,12 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
 /* ── Single Candle ── */
 const Candle = ({ lit, index, onTap }: { lit: boolean; index: number; onTap: () => void }) => {
   return (
-    <div className="flex flex-col items-center cursor-pointer" onClick={lit ? onTap : undefined}>
+    <div
+      className="flex flex-col items-center cursor-pointer p-2 -m-2"
+      onClick={lit ? onTap : undefined}
+      role="button"
+      aria-label={`Candle ${index + 1}${lit ? ' - tap to blow out' : ' - already out'}`}
+    >
       {/* Flame */}
       <AnimatePresence>
         {lit && (
