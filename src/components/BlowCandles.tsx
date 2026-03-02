@@ -7,8 +7,8 @@ interface BlowCandlesProps {
 }
 
 const CANDLE_COUNT = 5;
-const BLOW_THRESHOLD = 0.15;
-const BLOW_DURATION_MS = 600;
+const BLOW_THRESHOLD = 0.06;
+const BLOW_DURATION_MS = 300;
 
 const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
   const [litCandles, setLitCandles] = useState<boolean[]>(
@@ -132,7 +132,18 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
           {/* Candles row */}
           <div className="flex items-end justify-center gap-4 md:gap-6 mb-0 relative z-10">
             {litCandles.map((lit, i) => (
-              <Candle key={i} lit={lit} index={i} />
+              <Candle
+                key={i}
+                lit={lit}
+                index={i}
+                onTap={() => {
+                  setLitCandles((prev) => {
+                    const next = [...prev];
+                    next[i] = false;
+                    return next;
+                  });
+                }}
+              />
             ))}
           </div>
 
@@ -229,9 +240,9 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
 };
 
 /* ── Single Candle ── */
-const Candle = ({ lit, index }: { lit: boolean; index: number }) => {
+const Candle = ({ lit, index, onTap }: { lit: boolean; index: number; onTap: () => void }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center cursor-pointer" onClick={lit ? onTap : undefined}>
       {/* Flame */}
       <AnimatePresence>
         {lit && (
