@@ -22,6 +22,7 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
   const blowStartRef = useRef<number | null>(null);
+  const birthdaySongRef = useRef<HTMLAudioElement | null>(null);
 
   const cleanup = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
@@ -30,14 +31,40 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
     analyserRef.current = null;
   }, []);
 
+  // Play birthday song when component mounts
+  useEffect(() => {
+    const song = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+    song.loop = true;
+    song.volume = 0.4;
+    birthdaySongRef.current = song;
+    song.play().catch(() => {});
+    return () => {
+      song.pause();
+      song.currentTime = 0;
+    };
+  }, []);
+
   useEffect(() => () => cleanup(), [cleanup]);
 
-  // Once all candles out, wait a beat then proceed
+  // Once all candles out, fade song and proceed immediately
   useEffect(() => {
     if (litCandles.every((c) => !c) && !allBlown) {
       setAllBlown(true);
       cleanup();
-      setTimeout(onComplete, 1800);
+      // Fade out birthday song
+      const song = birthdaySongRef.current;
+      if (song) {
+        const fadeOut = setInterval(() => {
+          if (song.volume > 0.05) {
+            song.volume = Math.max(0, song.volume - 0.05);
+          } else {
+            song.pause();
+            clearInterval(fadeOut);
+          }
+        }, 80);
+      }
+      // Transition quickly without "Wish granted"
+      setTimeout(onComplete, 600);
     }
   }, [litCandles, allBlown, onComplete, cleanup]);
 
@@ -226,17 +253,6 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
         )}
       </AnimatePresence>
 
-      {/* All blown message */}
-      {allBlown && (
-        <motion.p
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", bounce: 0.5 }}
-          className="font-script text-3xl md:text-4xl text-gold text-center"
-        >
-          🎉 Wish granted! 🎉
-        </motion.p>
-      )}
     </motion.div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FloatingHearts from "@/components/FloatingHearts";
 import Sparkle from "@/components/Sparkle";
@@ -87,115 +87,187 @@ const fadeUp = {
   }),
 };
 
-const BirthdayMessage = () => (
-  <motion.div
-    key="message"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.5 }}
-    className="flex flex-col items-center"
-  >
-    {/* Opened envelope icon */}
+const BirthdayMessage = () => {
+  // Play celebration sound on mount
+  useEffect(() => {
+    const celebrationSound = new Audio("https://www.myinstants.com/media/sounds/tada-fanfare-a-6313.mp3");
+    celebrationSound.volume = 0.6;
+    celebrationSound.play().catch(() => {});
+  }, []);
+
+  return (
     <motion.div
-      initial={{ scale: 0, rotate: -180 }}
-      animate={{ scale: 1, rotate: 0 }}
-      transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-      className="mb-6"
+      key="message"
+      initial={{ opacity: 0, scale: 0, rotate: -10 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{
+        duration: 0.8,
+        type: "spring",
+        bounce: 0.6,
+        stiffness: 200,
+        damping: 12,
+      }}
+      className="flex flex-col items-center"
     >
-      <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center shadow-lg">
-        <img src="https://ih1.redbubble.net/image.3494792996.2576/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" alt="logo" className="w-full h-full object-cover" />
+      {/* Explosion particles */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{
+              opacity: 1,
+              scale: 0,
+              x: "50vw",
+              y: "50vh",
+            }}
+            animate={{
+              opacity: 0,
+              scale: [0, 1.5, 0.5],
+              x: `${Math.random() * 100}vw`,
+              y: `${Math.random() * 100}vh`,
+            }}
+            transition={{
+              duration: 1.5 + Math.random(),
+              delay: Math.random() * 0.3,
+              ease: "easeOut",
+            }}
+            className="absolute w-3 h-3 rounded-full"
+            style={{
+              background: [
+                "hsl(var(--primary))",
+                "hsl(var(--gold))",
+                "hsl(var(--rose-glow))",
+                "hsl(var(--accent))",
+                "hsl(var(--secondary))",
+              ][i % 5],
+            }}
+          />
+        ))}
       </div>
-    </motion.div>
 
-    {/* Date badge */}
-    <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible" className="mb-4">
-      <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold tracking-wide uppercase">
-        <PartyPopper className="w-4 h-4" />
-        March 6th
-        <PartyPopper className="w-4 h-4" />
-      </span>
-    </motion.div>
+      {/* Big flash overlay */}
+      <motion.div
+        initial={{ opacity: 0.8 }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 0.6 }}
+        className="fixed inset-0 bg-primary/20 pointer-events-none z-40"
+      />
 
-    {/* Heading */}
-    <motion.h1
-      custom={1}
-      variants={fadeUp}
-      initial="hidden"
-      animate="visible"
-      className="font-script text-5xl sm:text-6xl md:text-8xl text-primary text-center leading-tight mb-2"
-    >
-      Happy 20th
-    </motion.h1>
-
-    <motion.p
-      custom={1.5}
-      variants={fadeUp}
-      initial="hidden"
-      animate="visible"
-      className="font-script text-3xl sm:text-4xl md:text-5xl text-gold text-center mb-8"
-    >
-      Birthday!
-    </motion.p>
-
-    {/* Decorative divider */}
-    <motion.div custom={2} variants={fadeUp} initial="hidden" animate="visible" className="flex items-center gap-3 mb-10">
-      <Star className="w-4 h-4 text-gold" />
-      <MailOpen className="w-5 h-5 text-primary" />
-      <div className="w-16 h-px bg-border" />
-      <Cake className="w-6 h-6 text-rose-glow" />
-      <div className="w-16 h-px bg-border" />
-      <MailOpen className="w-5 h-5 text-primary" />
-      <Star className="w-4 h-4 text-gold" />
-    </motion.div>
-
-    {/* Message card */}
-    <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="max-w-lg w-full">
-      <div className="rounded-2xl bg-card border border-border p-8 md:p-10 shadow-xl backdrop-blur-sm">
-        <p className="text-lg md:text-xl leading-relaxed text-card-foreground text-center mb-6">
-          To someone who makes every moment brighter just by being in it —
-          <span className="text-primary font-semibold"> you</span> deserve
-          all the love, laughter, and happiness this world has to offer.
-        </p>
-
-        <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-center mb-6">
-          Twenty looks absolutely amazing on you. Here's to more adventures,
-          more smiles, and more of that charm that makes everyone around you smile. 💛
-        </p>
-
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <div className="h-px w-12 bg-accent" />
-          <Star className="w-4 h-4 text-gold" />
-          <div className="h-px w-12 bg-accent" />
+      {/* Opened envelope icon */}
+      <motion.div
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.5 }}
+        className="mb-6"
+      >
+        <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center shadow-lg overflow-hidden">
+          <img src="https://ih1.redbubble.net/image.3494792996.2576/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" alt="logo" className="w-full h-full object-cover" />
         </div>
+      </motion.div>
 
-        <p className="font-script text-2xl md:text-3xl text-primary text-center">
-          Wishing you nothing but the best,
-        </p>
-        <p className="font-script text-xl md:text-2xl text-gold text-center mt-1">
-          today and always ✨
-        </p>
-      </div>
-    </motion.div>
+      {/* Date badge */}
+      <motion.div custom={0.5} variants={fadeUp} initial="hidden" animate="visible" className="mb-4">
+        <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold tracking-wide uppercase">
+          <PartyPopper className="w-4 h-4" />
+          March 6th
+          <PartyPopper className="w-4 h-4" />
+        </span>
+      </motion.div>
 
-    {/* Bouncing emojis */}
-    <motion.div custom={4} variants={fadeUp} initial="hidden" animate="visible" className="mt-10 flex items-center gap-4">
-      {["🎊", "✨", "🥂", "✨", "🎊"].map((emoji, i) => (
-        <motion.span
-          key={i}
-          className="text-2xl md:text-3xl"
-          animate={{ y: [0, -8, 0] }}
-          transition={{
-            duration: 1.5,
-            delay: i * 0.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          {emoji}
-        </motion.span>
-      ))}
+      {/* Heading with scale bounce */}
+      <motion.h1
+        initial={{ opacity: 0, scale: 0.3, y: 50 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.6, type: "spring", bounce: 0.5 }}
+        className="font-script text-5xl sm:text-6xl md:text-8xl text-primary text-center leading-tight mb-2"
+      >
+        Happy 20th
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0, scale: 0.3 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.8, duration: 0.5, type: "spring", bounce: 0.5 }}
+        className="font-script text-3xl sm:text-4xl md:text-5xl text-gold text-center mb-8"
+      >
+        Birthday!
+      </motion.p>
+
+      {/* Decorative divider */}
+      <motion.div
+        initial={{ opacity: 0, width: 0 }}
+        animate={{ opacity: 1, width: "auto" }}
+        transition={{ delay: 1.1, duration: 0.6 }}
+        className="flex items-center gap-3 mb-10 overflow-hidden"
+      >
+        <Star className="w-4 h-4 text-gold" />
+        <MailOpen className="w-5 h-5 text-primary" />
+        <div className="w-16 h-px bg-border" />
+        <Cake className="w-6 h-6 text-rose-glow" />
+        <div className="w-16 h-px bg-border" />
+        <MailOpen className="w-5 h-5 text-primary" />
+        <Star className="w-4 h-4 text-gold" />
+      </motion.div>
+
+      {/* Message card */}
+      <motion.div
+        initial={{ opacity: 0, y: 60, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 1.3, duration: 0.7, type: "spring", bounce: 0.3 }}
+        className="max-w-lg w-full"
+      >
+        <div className="rounded-2xl bg-card border border-border p-8 md:p-10 shadow-xl backdrop-blur-sm">
+          <p className="text-lg md:text-xl leading-relaxed text-card-foreground text-center mb-6">
+            To someone who makes every moment brighter just by being in it —
+            <span className="text-primary font-semibold"> you</span> deserve
+            all the love, laughter, and happiness this world has to offer.
+          </p>
+
+          <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-center mb-6">
+            Twenty looks absolutely amazing on you. Here's to more adventures,
+            more smiles, and more of that charm that makes everyone around you smile. 💛
+          </p>
+
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-px w-12 bg-accent" />
+            <Star className="w-4 h-4 text-gold" />
+            <div className="h-px w-12 bg-accent" />
+          </div>
+
+          <p className="font-script text-2xl md:text-3xl text-primary text-center">
+            Wishing you nothing but the best,
+          </p>
+          <p className="font-script text-xl md:text-2xl text-gold text-center mt-1">
+            today and always ✨
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Bouncing emojis */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8 }}
+        className="mt-10 flex items-center gap-4"
+      >
+        {["🎊", "✨", "🥂", "✨", "🎊"].map((emoji, i) => (
+          <motion.span
+            key={i}
+            className="text-2xl md:text-3xl"
+            animate={{ y: [0, -8, 0] }}
+            transition={{
+              duration: 1.5,
+              delay: i * 0.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            {emoji}
+          </motion.span>
+        ))}
+      </motion.div>
     </motion.div>
-  </motion.div>
-);
+  );
+};
 
 export default Index;
