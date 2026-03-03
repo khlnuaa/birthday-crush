@@ -7,8 +7,8 @@ interface BlowCandlesProps {
 }
 
 const CANDLE_COUNT = 5;
-const BLOW_THRESHOLD = 0.06;
-const BLOW_DURATION_MS = 300;
+const BLOW_THRESHOLD = 0.02;
+const BLOW_DURATION_MS = 150;
 
 const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
   const [litCandles, setLitCandles] = useState<boolean[]>(
