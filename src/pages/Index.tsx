@@ -90,7 +90,7 @@ const fadeUp = {
 const BirthdayMessage = () => {
   // Play celebration sound on mount
   useEffect(() => {
-    const celebrationSound = new Audio("https://www.myinstants.com/media/sounds/tada-fanfare-a-6313.mp3");
+    const celebrationSound = new Audio('/wish2.mp3'); 
     celebrationSound.volume = 0.6;
     celebrationSound.play().catch(() => {});
   }, []);

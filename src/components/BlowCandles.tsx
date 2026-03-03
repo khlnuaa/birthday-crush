@@ -7,8 +7,8 @@ interface BlowCandlesProps {
 }
 
 const CANDLE_COUNT = 5;
-const BLOW_THRESHOLD = 0.02;
-const BLOW_DURATION_MS = 150;
+const BLOW_THRESHOLD = 0.013;
+const BLOW_DURATION_MS = 50;
 
 const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
   const [litCandles, setLitCandles] = useState<boolean[]>(
@@ -33,7 +33,7 @@ const BlowCandles = ({ onComplete }: BlowCandlesProps) => {
 
   // Play birthday song when component mounts
   useEffect(() => {
-    const song = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+    const song = new Audio('/birthday-song.mp3');    
     song.loop = true;
     song.volume = 0.4;
     birthdaySongRef.current = song;

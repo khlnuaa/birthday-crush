@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const items = ["🎂", "🎁", "🎈", "🥳", "🎉", "✨", "🎊", "⭐", "💫", "🪅", "🧁", "🍰", "🎀", "🌟", "🎶"];
+const items = ["🎂", "🎁", "🥳", "🎉", "✨", "🏵️", "⭐", "💫", "💕", "🧁", "🍰", "🌟"];
 
 const floatingItems = Array.from({ length: 15 }, (_, i) => ({
   id: i,
