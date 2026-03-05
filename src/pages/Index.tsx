@@ -61,7 +61,7 @@ const EnvelopeScreen = ({ onOpen }: { onOpen: () => void }) => (
 
     <div className="text-center">
       <p className="font-script text-3xl md:text-4xl text-primary mb-2">
-        You've got a surprise!
+        You've got a message!
       </p>
       <p className="font-script text-xl md:text-xl text-primary mb-2">
       from khulan
@@ -201,10 +201,10 @@ const BirthdayMessage = () => {
         className="flex items-center gap-3 mb-10 overflow-hidden"
       >
         <Star className="w-4 h-4 text-gold" />
-        <MailOpen className="w-5 h-5 text-primary" />
-        <div className="w-16 h-px bg-border" />
+        <Mail className="w-5 h-5 text-primary" />
+        <div className="w-16 h-1.5 bg-border rounded-full" />
         <Cake className="w-6 h-6 text-rose-glow" />
-        <div className="w-16 h-px bg-border" />
+        <div className="w-16 h-1.5 bg-border rounded-full" />
         <MailOpen className="w-5 h-5 text-primary" />
         <Star className="w-4 h-4 text-gold" />
       </motion.div>
@@ -217,15 +217,37 @@ const BirthdayMessage = () => {
         className="max-w-lg w-full"
       >
         <div className="rounded-2xl bg-card border border-border p-8 md:p-10 shadow-xl backdrop-blur-sm">
-          <p className="text-lg md:text-xl leading-relaxed text-card-foreground text-center mb-6">
-            To someone who makes every moment brighter just by being in it —
-            <span className="text-primary font-semibold"> you</span> deserve
-            all the love, laughter, and happiness this world has to offer.
+          
+        <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
+        Hey birthday boy 🎉
           </p>
 
-          <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-center mb-6">
-            Twenty looks absolutely amazing on you. Here's to more adventures,
-            more smiles, and more of that charm that makes everyone around you smile. 💛
+          <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
+          It’s been a while since we’ve seen each other — I might be starting to forget your face a little 😂 but somehow 
+          I never forget your birthday.  
+          </p>
+
+          <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
+          Anyway, I just wanted to say I hope this new decade brings you the courage to try anything you want. It’s okay to 
+          make mistakes — we’re still young, and that’s how we learn about the world and about ourselves. Be brave, take risks, 
+          and trust that there are people who genuinely care about you and are quietly cheering for you. Yes, I’m included.  
+          </p>
+
+          <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
+          I don’t usually go around saying “I like this or that about you,” but today’s special and you might just deserve a 
+          little extra kindness from me… your sense of humor has always been funny in the best ways. And let’s be honest, 
+          that smile of yours is still dangerously good. You better keep it and not show it to every random girl you meet 
+          — haha, of course I’m joking. But really, just saying it 😉  
+          </p>
+
+          <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
+          And I’m writing this in English because if I said all of this in Mongolian, it would sound way too serious and lose 
+          its funny 😂 I probably wouldn’t even find the right words to express what I mean.  
+          </p>
+
+          <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
+          So yeah… I just hope you live your 20s fully — feel everything, learn from everything, and grow into the best 
+          version of yourself.
           </p>
 
           <div className="flex items-center justify-center gap-2 mb-6">
@@ -235,7 +257,7 @@ const BirthdayMessage = () => {
           </div>
 
           <p className="font-script text-2xl md:text-3xl text-primary text-center">
-            Wishing you nothing but the best,
+            Wishing you all the best,
           </p>
           <p className="font-script text-xl md:text-2xl text-gold text-center mt-1">
             today and always ✨
