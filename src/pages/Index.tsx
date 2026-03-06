@@ -236,8 +236,8 @@ const BirthdayMessage = () => {
           <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
           I don’t usually go around saying “I like this or that about you,” but today’s special and you might just deserve a 
           little extra kindness from me… your sense of humor has always been funny in the best ways. And let’s be honest, 
-          that smile of yours is still dangerously good. You better keep it and not show it to every random girl you meet 
-          — haha, of course I’m joking. But really, just saying it 😉  
+          that smile of yours is still dangerously good. You better keep it and not show it to every random girl you meet — 
+          haha, of course I’m joking. But really, I hope you know what a charming person you are.😉
           </p>
 
           <p className="text-base md:text-lg font-paragraph italic leading-relaxed text-muted-foreground text-center mb-6">
